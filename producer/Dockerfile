@@ -1,5 +1,5 @@
-# Simple Dockerfile for Kafka Producer
-FROM maven:3.9.4-openjdk-11-slim
+# Updated Dockerfile for Kafka Producer
+FROM maven:3.8.6-openjdk-11-slim
 
 # Set working directory
 WORKDIR /app

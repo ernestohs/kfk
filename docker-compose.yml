@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Zookeeper service - required for Kafka coordination
   zookeeper:

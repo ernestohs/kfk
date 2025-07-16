@@ -1,14 +1,8 @@
-# Consumer Dockerfile
-FROM openjdk:11-jre-slim
+# Updated Consumer Dockerfile
+FROM maven:3.8.6-openjdk-11-slim
 
 # Set working directory
 WORKDIR /app
-
-# Install Maven (for building the application)
-RUN apt-get update && \
-    apt-get install -y maven && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 # Copy the source code and pom.xml
 COPY pom.xml .
