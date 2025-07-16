@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Project Information -->
+    <groupId>com.example.kafka</groupId>
+    <artifactId>kafka-producer</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Kafka Producer Application</name>
+    <description>Configurable Kafka producer for sending messages to Kafka topics</description>
+    <url>https://github.com/your-org/kafka-producer</url>
+
+    <!-- Developer Information -->
+    <developers>
+        <developer>
+            <id>dev</id>
+            <name>Developer Name</name>
+            <email>dev@example.com</email>
+            <organization>Your Organization</organization>
+        </developer>
+    </developers>
+
+    <!-- License Information -->
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- Properties -->
+    <properties>
+        <!-- Java Version -->
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Dependency Versions -->
+        <kafka.version>3.6.1</kafka.version>
+        <jackson.version>2.16.1</jackson.version>
+        <slf4j.version>2.0.12</slf4j.version>
+        <logback.version>1.4.14</logback.version>
+        <junit.version>5.10.1</junit.version>
+        <mockito.version>5.8.0</mockito.version>
+        <testcontainers.version>1.19.3</testcontainers.version>
+
+        <!-- Plugin Versions -->
+        <maven.compiler.plugin.version>3.12.1</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+        <maven.failsafe.plugin.version>3.2.5</maven.failsafe.plugin.version>
+        <maven.shade.plugin.version>3.5.1</maven.shade.plugin.version>
+        <maven.jar.plugin.version>3.3.0</maven.jar.plugin.version>
+        <exec.maven.plugin.version>3.1.1</exec.maven.plugin.version>
+        <jacoco.maven.plugin.version>0.8.11</jacoco.maven.plugin.version>
+
+        <!-- Main Class for Producer -->
+        <main.class>com.example.kafka.producer.KafkaProducer</main.class>
+    </properties>
+
+    <!-- Dependencies -->
+    <dependencies>
+        <!-- Kafka Client Dependencies -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>${kafka.version}</version>
+        </dependency>
+
+        <!-- JSON Processing with Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- Logging Dependencies -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <!-- Metrics and Monitoring (Optional) -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-core</artifactId>
+            <version>1.12.2</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>1.12.2</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Configuration Management -->
+        <dependency>
+            <groupId>com.typesafe</groupId>
+            <artifactId>config</artifactId>
+            <version>1.4.3</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Test Dependencies -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Mockito for Mocking -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Testcontainers for Integration Testing -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>kafka</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- AssertJ for Better Assertions -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.25.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Awaitility for Asynchronous Testing -->
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>4.2.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- Build Configuration -->
+    <build>
+        <finalName>kafka-producer</finalName>
+        
+        <!-- Resource Filtering -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                    <include>**/*.yaml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.properties</exclude>
+                    <exclude>**/*.xml</exclude>
+                    <exclude>**/*.yml</exclude>
+                    <exclude>**/*.yaml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                        <arg>-Xlint:all</arg>
+                        <arg>-Xlint:-processing</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <!-- Maven JAR Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven.jar.plugin.version}</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>${main.class}</mainClass>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Built-By>${user.name}</Built-By>
+                            <Build-Time>${maven.build.timestamp}</Build-Time>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- Maven Shade Plugin for Fat JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven.shade.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>${main.class}</mainClass>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.handlers</resource>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.schemas</resource>
+                                </transformer>
+                            </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>META-INF/NOTICE*</exclude>
+                                        <exclude>META-INF/LICENSE*</exclude>
+                                        <exclude>META-INF/DEPENDENCIES*</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Maven Surefire Plugin for Unit Tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+                <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                    <argLine>-Xmx1024m</argLine>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*Tests.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                        <exclude>**/*IT.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- Maven Failsafe Plugin for Integration Tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.plugin.version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*IntegrationTest.java</include>
+                        <include>**/*IT.java</include>
+                    </includes>
+                    <argLine>-Xmx2048m</argLine>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Exec Maven Plugin for Running Application -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec.maven.plugin.version}</version>
+                <configuration>
+                    <mainClass>${main.class}</mainClass>
+                    <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                </configuration>
+            </plugin>
+
+            <!-- JaCoCo Plugin for Code Coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.maven.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>PACKAGE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.50</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Versions Maven Plugin for Dependency Updates -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.16.2</version>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
+            </plugin>
+
+            <!-- Dependency Check Plugin for Security -->
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>9.0.8</version>
+                <configuration>
+                    <failBuildOnCVSS>8</failBuildOnCVSS>
+                    <suppressionFiles>
+                        <suppressionFile>owasp-dependency-check-suppressions.xml</suppressionFile>
+                    </suppressionFiles>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- Profiles for Different Environments -->
+    <profiles>
+        <!-- Development Profile -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+                <log.level>DEBUG</log.level>
+            </properties>
+        </profile>
+
+        <!-- Testing Profile -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.profiles.active>test</spring.profiles.active>
+                <log.level>INFO</log.level>
+            </properties>
+        </profile>
+
+        <!-- Production Profile -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+                <log.level>WARN</log.level>
+            </properties>
+        </profile>
+
+        <!-- Performance Profile -->
+        <profile>
+            <id>performance</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Docker Profile -->
+        <profile>
+            <id>docker</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>dockerfile-maven-plugin</artifactId>
+                        <version>1.4.13</version>
+                        <executions>
+                            <execution>
+                                <id>default</id>
+                                <goals>
+                                    <goal>build</goal>
+                                    <goal>push</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <repository>kafka-producer</repository>
+                            <tag>${project.version}</tag>
+                            <buildArgs>
+                                <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                            </buildArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <!-- Distribution Management -->
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <!-- SCM Information -->
+    <scm>
+        <connection>scm:git:git://github.com/your-org/kafka-producer.git</connection>
+        <developerConnection>scm:git:ssh://github.com:your-org/kafka-producer.git</developerConnection>
+        <url>http://github.com/your-org/kafka-producer/tree/main</url>
+    </scm>
+</project>
+

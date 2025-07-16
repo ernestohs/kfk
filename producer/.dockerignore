@@ -1,0 +1,49 @@
+# Maven build artifacts
+target/
+!target/kafka-producer.jar
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker files
+Dockerfile*
+docker-compose.yml
+.dockerignore
+
+# Documentation
+README.md
+docs/
+
+# Test files
+src/test/
+
+# Log files
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+
+# Maven wrapper (if not needed)
+.mvn/
+mvnw
+mvnw.cmd
+
+# Environment files
+.env
+.env.local
+
